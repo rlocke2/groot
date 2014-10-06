@@ -45,6 +45,26 @@
 %% may contain any and all LaTeX command (re)definitions that will be used
 %% throughout the document
 %\usepackage{mydissertationabbrev}
+\usepackage{enumerate,fullpage,nicefrac,amsmath,amssymb,multicol,amsthm, mathrsfs}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows,shapes}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{problem}[theorem]{Problem}
+
+\theoremstyle{definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\LG}{\mathcal{L}(G)}
 
 \beforedoc
 
@@ -52,10 +72,9 @@
 
 %% In this section, all of the user-specific fields to be used in the
 %% title pages are set
-\title{First line of the title\\
-            second line of the title}
-\onelinetitle{The complete title is to be repeated here without any line
-        breaks for the second page and for the abstract page}
+\title{Analysis in the Discrete Setting of an Infinite Graph and\\
+            the Discrete Analogue of the Zygmund Space}
+\onelinetitle{Analysis in the Discrete Setting of an Infinite Graph and the Discrete Analogue of the Zygmund Space}
 \author{Rachel E. Locke}
 \degree{Doctor of Philosophy}
 \doctype{Dissertation Proposal}
@@ -63,17 +82,17 @@
 \discipline{Mathematics}
 
 \seconddeg{Master of Science}
-\seconddegschool{My Former School}
-\seconddegyear{Year of second degree}
+\seconddegschool{George Mason University}
+\seconddegyear{2012}
 
 \firstdeg{Bachelor of Science}
-\firstdegschool{My Other Former School}
-\firstdegyear{Year of first degree}
+\firstdegschool{Grove City College}
+\firstdegyear{2008}
 
-\degreeyear{Year}
+\degreeyear{2014}
 
 % Note: semester name should be written in its full-form. For example, Fall Semester, not just Fall.
-\degreesemester{Semester}
+\degreesemester{Fall Semester}
 
 \advisor{Dr. Flavia Colonna}
 
@@ -81,7 +100,7 @@
 
 \secondmember{Dr. Walter Morris}
 
-\thirdmember{Third Member}
+\thirdmember{Dr. Robert Allen}
 
 \depthead{Department Head}
 
@@ -97,10 +116,10 @@
 % please make appropriate changes in the "signaturepage" section of gmudissertation.sty file.
 \signaturepage
 
-\titlepage
+%\titlepage
 
 % copyright technically optional but should be included in to avoid potential pagination problems
-\copyrightpage
+%\copyrightpage
 
 %%
 %% Dedication page
@@ -138,7 +157,8 @@
 %%
 %% Abstract
 %%
-%\abstractpage
+\abstractpage
+
 
 %The first page of the abstract
 
@@ -160,83 +180,143 @@
 \startofchapters
 
 %% include the chapters one by one (or paste the chapter text in directly if desired)
-\include{chapterOne}
+%\include{chapterOne}
 
-\textbf{Wish List}\\
+\pagebreak
 
-\textbf{0.}List the types of graphs for which we change the definition and everything immediately follows\\
+\chapter{Preliminaries and Background}
+ 
+\indent \indent For a complex Banach space $X$ of functions on a set $\Omega$ and a complex-valued function $\psi$ on $\Omega$, the multiplication operator with symbol $\psi$ is defined as the operator $M_\psi f = \psi f$ for each $f \in X$. The study of multiplication operators attempts to tie the operator theoretic properties of $M_\psi$ to the function theoretic properties of the symbol $\psi$. Properties include boundedness, compactness, and isometries. Also inluded are estimates on the bounds of operator norms and essential norms and identification of the spectrum.
 
-\indent \indent Define a \textbf{cycle} as a path $[v_1, v_2, \dots v_n, v_1]$ with $v_j \neq v_k$ for all $k \neq j$ and $n$ is the \textbf{length} of the cycle.\\
+\indent Cohen and Colonna made clear the similarity betwen the classical environment of hte unit disk and the discrete environment of a tree in \cite{CC94}. This prompted the start of interest in studying in the discrete setting. In \cite{Tree}, Colonna and Easley introduce the space $\mathcal{L}$ and characterized operators where $\Omega$ is an infinite tree $T$ and $X$ is the space $\mathcal{L}$ of complex-valued Lipschitz functions on $T$ such that $|f(v) - f(u)| \le C d(v,u)$, for all $u,\,v$ vertices of $T$ and $d(u,v)$ is the distance between $u$ and $v$, and $C$ is a constant \cite{Tree}. This is referred to as the Lipschitz space of the tree, and is a discrete analogue of a Banach space of analytic functions on the open unit disk $\mathbb{D}$, the Bloch space. In a similar analogue to the little Bloch space $\mathcal{B}_0 (\mathbb{D})$ consisting of the Bloch functions $f$ such that $|f^\prime (z)| = o(\frac{1}{1-|z|^2})$ as $|z| \to 1$, Colonna and Easley defined the little Lipschitz space $\mathcal{L}_0$ as the supbspace of $\mathcal{L}$ consisting of all function $f$ on $T$ such that $\lim_{|v| \to \infty} Df(v) = 0$ \cite{Tree}. In \cite{Tree}, Colonna and Easley found growth estimates, characterized bounded and compact multiplication operators, found estimates on operator norm and essential operator norms, studied the spectrum, and found the isometries. Additional work was done on weighted infinite trees in \cite{Weighted} and between spaces on infinite trees in \cite{Between}.
 
-\indent \indent Define $\rho (v,w) = $inf\{$l(\pi): \pi$ is a path from $v$ to $w$ and $l(\pi)=$ the number of edges on $\pi$\}. \\
+\indent Motivated by this work on infinite trees, we wish to extend these results to a study of infinite graphs. The definition of $\beta _f = \sup_{z \neq w} \frac{|f(z) - f(w)|}{d(z,w)}$ allows for the definition of $Df(v)$ in $\mathcal{L}$ and thus a norm in \cite{Weighted}. The problem we run into for trying to generalize this idea to a general infinite graph $G$ is the idea of $d(z,w)$. Unlike in a tree, we do not have a unique path between any two vertices of the graph. This similarly leads to problems defining our analogy to the little Lipschitz space $L_0$, as we do not have an immediate corollary to $Df = |f(v) - f(v^-)|$ for $v \neq o$ and $Df(o)=0$ \cite{Tree}. We therefore need to define a meaning for $d(v,w)$ and $|v|$. We will use $f^\prime (v)$ rather than the notation of $Df$. We prefer this notation for the analogy to the standard derivative. 
 
-\indent \indent In the Banach space $\mathcal{L}$, as defined in [1], we change the definition of $\| f \| = |f(o)| + \text{sup}_{v \neq w} \frac{|f(v)-f(w)|}{\rho(v,w)} = |f(o)| + \textit{l}_f$. Then $\textit{l}_f = \|Df\|_\infty = \text{sup}_{v \neq o} |f(v)-f(v^-)|$. This quantity is well-defined for the following types of infinite trees: infinite trees, as discussed in [1], those with a finite number of disjoint odd length cycles, those with a finite number of odd length cycles disjoint except for possibly pairwise sharing a single vertex. Then all the results from [1] should follow with this amendment to the definition of the norm. \\
+\indent In \cite{Tree}, Colonna and Easley were able to show that $\|Df\|_\infty = \sup_{v\neq w} \frac{|f(v)-f(w)|}{d(v,w)}$, and therefore use the expression $\|f\|_\mathcal{L} = |f(o)|+\|Df\|_\infty$ for the norm. Figure 1.1 shows an example of why the quantity $f^\prime$ is not immediately obvious in the case of a general graph. To find $f^\prime(v)=|f(v)-f(v^-)|$, as it is defined in the case of an infinite tree, we need to choose $v^-$, but it is not clear whether $w$ or $y$ is $v^-$. We are hoping to modify the definition of $f^\prime$ so that this idea can still be applied to general infinite graphs.
 
-\textbf{1.} Define the new graph $G$ and its spaces better \\
+\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\clip(-3.2600000000000002,1.9399999999999993) rectangle (2.540000000000001,6.04);
+\draw (-2.14,3.08)-- (-0.74,3.76);
+\draw (-0.74,3.76)-- (-0.58,5.18);
+\draw (-0.58,5.18)-- (1.08,4.8);
+\draw (1.08,4.8)-- (0.9,3.24);
+\draw (0.9,3.24)-- (-0.74,3.76);
+\draw (-2.26,3.5399999999999996) node[anchor=north west] {o};
+\draw (1.2400000000000009,5.04) node[anchor=north west] {v};
+\draw (-0.6799999999999996,5.56) node[anchor=north west] {w};
+\draw (1.0400000000000007,3.2399999999999993) node[anchor=north west] {y};
+\begin{scriptsize}
+\draw [fill=qqqqff] (-2.14,3.08) circle (1.5pt);
+\draw [fill=qqqqff] (-0.74,3.76) circle (1.5pt);
+\draw [fill=qqqqff] (-0.58,5.18) circle (1.5pt);
+\draw [fill=qqqqff] (1.08,4.8) circle (1.5pt);
+\draw [fill=qqqqff] (0.9,3.24) circle (1.5pt);
+\end{scriptsize}
+\end{tikzpicture}
+\caption{}
+\end{center}
+\end{figure}
 
-\indent \indent Define $G$ to be an infinite tree with the addition of finite disjoint cycles. (Even cycles now allowed.) We first looked at the case when $G$ is one of the above types with the addition of one even cycle. Then we need to look at extending this to a finite set of disjoint cycles. We still define a vertex $o$ as the "origin". \\
 
-\indent \indent $\mathcal{L}$ is the space of Lipschitz functions for which $\|Df\|_\infty = \text{sup}_{v \in G^*} Df(v) < \infty$ from before, where $G^* = G \backslash o$. I believe that we now need to change this definition. \\
 
-\indent \indent We are now considering the case for which $G$ has a single even cycle. Let $b$ be the vertex in the even cycle with the minimum distance from $o$. Note that it is possible for $o=b$. Then number the rest of the vertices from $b$ as $\{a_1, a_2, ....a_k, c\}$. $c$ is the vertex opposite $b$, which is possible since the cycle is even. Alternate sides for $a_1$ and $a_2$, etc. Then define $T_1 = $ the "tree" formed by removing edge $[b, a_1]$ and $T_2 =$ the "tree" formed by removing edge $[b,a_2]$. Then define $D_f = \text{sup}\{s_1, \dots s_k\}$ where $s_i = \text{sup}_{v \in T_i, v \neq o} |f(v) - f(v^-)|$. We use this definition to hopefully extend to finite cycles. \\
+\indent If a general infinite graph is too difficult, we aim to look at specific types of graphs. Possibilities include allowing only a finite number of cycles in the tree in a variety of configurations. In some cases, this allows for a simple change in definitions to allow all the results from \cite{Tree} to apply, but in other cases it is not trivial. Our first goal here is to provide a workable norm for the space $\mathcal{L}(G)$ where $G$ is our new infinite graph.
 
-\indent Define the new norm and show it is in fact a norm and the derivative way of writing it works\\
+\indent Operator theory on the Zygmund space, defined as $\mathcal{Z} = \{f \in H(\mathbb{D}): f^\prime \in \mathcal{B}\}$, where $\mathcal{B}$ is the Bloch space mentioned above, has also been studied. Recently, several authors have studied composition and weighted composition operators acting on the Zygmund space. In \cite{Zyg1}, Colonna and Li characterize bounded and compact operators from $H^\infty$, the space of all bounded analytic functions $f$ on $\mathbb{D}$ with norm $\|f\|_\infty = \sup_{z \in \mathbb{D}} |f(z)|$ to $\mathcal{Z}$ and $\mathcal{Z}_0$, the little Zygmund space. In \cite{Zyg2}, Li and Fu characterize generalized weighted composition operators from the Bloch space into the Zygmund space. Fu and Li also study composition operators acting between Zygmund spaces and $\mathcal{Q}_k$ spaces in \cite{Zyg3}.
 
-\indent \indent We define $\| f\|_G = |f(o)| + \text{sup}_{v \neq w} \frac{|f(v)-f(w)|}{\rho(v,w)} = |f(o)| + l_f$.  First, $\|f\|_G$ is a norm:\\
+\indent In this proposal, based on the anaologue between the Bloch space $\mathcal{B}$ and the Lipschitz space $\mathcal{L}$ in the discrete setting of a tree (or a graph), we wish to study the discrete analogue to the Zygmund space. We then have $\|f\|_{\mathcal{Z}} = |f(0)| + \|f^\prime\|_{\mathcal{B}}$. We also look at if $g \in \mathcal{B}$, then $\displaystyle \|g\|_\mathcal{B} = |g(0)|+\sup_{z \in \mathbb{D}}\, (1 - |z|^2)|g^\prime (z)|$. $\mathcal{Z}$ is a Banach space, and we want $\displaystyle \|f\|_\mathcal{Z} = |f(0)|+|f^\prime(0)| + \beta_f$ where $\beta_f = \sup_{z \in \mathbb{D}} \, (1-|z|^2)|f^{\prime\prime}(z)|<\infty$.  We wish to study anaologous properties in this discrete space to those that have been studied in the continuous setting, such as point-evaluation estimates for functions in $\mathcal{Z}$, bounded multiplication operators, compact multiplication operators, isometries and norm estimates.
 
-\indent \indent \indent $\|f\|_G \ge 0$ for all $f$ clearly. $\|f\|_G=0$ if and only if $f(v) = f(w)$ for all $v\neq w$, or when $f$ is constant. Also $|f(o)|$ must be zero as well, meaning $f$ is the constant zero function.  $\|cf\|_G = |cf(o)| + \text{sup}_{v \neq w} \frac{|cf(v)-cf(w)|}{\rho(v,w)} = |c||f(o)| + |c|\text{sup}_{v\neq w} \frac{|f(v)-f(w)|}{\rho (v,w)} = |c|\|f\|_G$.  Lastly, $\|f+g\|_G=|(f+g)(o)|+\text{sup}_{v\neq w} \frac{|(f+g)(v) - (f+g)(w)|}{\rho(v,w)} \le |f(o)| + |g(o)| + l_f + l_g = \|f\|_G + \|g\|_G$, and this is a norm. \\
 
-\indent \indent We want to show that $l_f = D_f$ so you can consider this as a sort of derivative and the norm would be $\|f\|_G=|f(o)|+D_f$. Now we show that $l_f = D_f$ for the case of one even cycle. 
+\chapter{Proposed Thesis Work}
 
-\indent The space is a functional Banach space\\
+\indent \indent Motivated by the questions and research above, there are two general directions of proposed research. The following are a series of questions for proposed research in both general directions. The thesis will consist of a subset of the questions listed, depending on the difficulty of the questions. 
 
-\indent Bounded multiplication operators in this space: find a characterization\\
+\section{Infinite Graphs}
 
-\indent Find upper and lower bounds on the operator norm for a bounded multiplication operator\\
+\indent \indent The following questions relate to the direction of research indicated above. Let $G$ be a general infinite connected graph. We are going to consider simple graphs for the reasons that loops will always give $|f(v)-f(v)|=0$ and parallel edges do not impact the value of the function at the vertices. This may change in the case in which the edges have weights, which may be future work. Thus for this proposal, we consider $G$ as an infinite, connected, simple graph.
 
-\indent Spectrum?\\
+ \indent We define $\LG$ to be the space of complex-valued functions $f$ defined on the vertices of a graph $G$ such that $|f(v) - f(u)| \le C\, d(u,v)$ for all vertices $v, \, u$ of $G$, where $d(v,u)$ is the distance betwen $v$ and $u$, and $C$ is a constant. We define the distance between two vertices to be $d(v,u)$ as the length of a minimum path from $u$ to $v$. We choose a vertex $o$ to be the root of our general graph, and then define $|v| = d(o,v)$. 
 
-\indent Compact bounded multiplication operators: characterization\\
 
-\indent Essential norm?\\
+\begin{enumerate}
+\item Is $\| f \|_{\mathcal{L}(G)} = |f(o)|+\sup_{v \neq w} \frac{|f(v)-f(w)|}{d(v,w)}$ a norm on $\mathcal{L}(G)$?
+\item Is $\mathcal{L}(G)$ complete?
+\item Is there a better expression for $\| \cdot \|_{\mathcal{L}(G)}$, such as $|f(o)| + \|f^\prime \|_\infty$ ?
+\item How can the little Lipschitz space be defined (if at all) on $\mathcal{L}(G)$?
+\item What are the growth conditions?
+\item Characterize the bounded and compact multiplication operators on $\mathcal{L}(G)$.
+\end{enumerate}
 
-\indent Isometries: characterize or show nonexistence\\
+\section{Discrete Zygmund space}
 
-\textbf{2.} Define a weighted space and norm\\
+\indent \indent For $f \in \mathcal{L}$, the Liptschitz space, define $f^\prime (v) = f(v) - f(v^-)$ for $v \neq 0$ and $f^\prime (o)=0$. Then, using the notation in \cite{Tree}, $Df(v)=|f^{\prime\prime} (v)|$ so that $\|f\|_\mathcal{L} = |f(o)| + \|f^\prime\|_\infty$, for all $f \in \mathcal{L}$. Define $\mathcal{Z}=\{f:T \to \mathbb{C}|f^\prime \in \mathcal{L}\}$. Then $\|f\|_\mathcal{Z} = |f(o)| + |f^\prime(o)| + \|f^{\prime\prime}\|_\infty = |f(o)| + \|f^\prime\|_\mathcal{L}$.
 
-\indent show it's a Banach space\\
+\indent The following is our main result that we hope to prove and extend. 
+\begin{conjecture}\label{Zygmund} $\mathcal{Z}$ is a complex Banach space with norm $\|f\|_\mathcal{Z} = |f(o)|+\|f^\prime\|_\mathcal{L}=|f(o)|+\|f\|_\infty$.\end{conjecture} 
 
-\indent Bounded Multiplication operators characterization\\
+\indent The following questions are related to this direction of research.
 
-\indent upper and lower bound on the norm of bounded multiplication operators\\
+\begin{enumerate}
+\item Prove Conjecture \ref{Zygmund}.
 
-\indent Operator Norm bounds\\
+\item Find the point-evaluation estimate for functions in $\mathcal{Z}$.
 
-\indent Spectrum?\\
+\item Characterize $M_\psi : \mathcal{Z} \to \mathcal{Z}$ bounded.
 
-\indent Compact operators?\\
+\item Determine norm estimates of $M_\psi$.
 
-\indent Essential norm?\\
+\item Characterize $M_\psi : \mathcal{Z} \to \mathcal{Z}$ compact.
 
-\indent Isometries?\\
+\item Determine essential norm estimates.
 
-\textbf{3.} Zygmund space discrete analogue\\
+\item Study the spectrum, the point spectrum, the approximate spectrum. 
 
-\indent Show $W$ is a Banach space (includes norm definition)\\
+\item Find the isometries.
 
-\indent Find, if suitable, other formulations for the seminorm\\
+\item Characterize the $M_\psi$ bounded below. 
 
-\indent Multiplication Operators on $W$\\
+\end{enumerate}
 
-\include{chapterTwo}
+\section{Radial Trees}
+
+\indent \indent For a third possible area of research, we ask the general question: 
+\begin{question} How much can results from homogenous trees be generalized to nonhomogeneous trees? \end{question}
+
+\indent The Bloch space of a homogeneous tree was studied in \cite{HomoGen} by Cohen and Colonna. We wish to extend many of the results from this paper to nonhomogeneous trees. Two categories of nonhomogenous trees could be considered, radial trees and semihomogeneous trees. Radial trees would be the first direction of research in this area. 
+
+\chapter{Preliminary Results}
+
+\indent \indent The following consists of preliminary results on the question of inifinite graphs. 
+
+\indent Define a \textbf{cycle} as a path $[v_1, v_2, \dots v_n, v_1]$ with $v_j \neq v_k$ for all $k \neq j$ and $n$ is the \textbf{length} of the cycle.
+
+\indent Define $\rho (v,w) = $inf\{$l(\pi): \pi$ is a path from $v$ to $w$ and $l(\pi)=$ the number of edges on $\pi$\}. 
+
+\indent In the Banach space $\mathcal{L}$, as defined in [1], we change the definition of $$\| f \| = |f(o)| + \text{sup}_{v \neq w} \frac{|f(v)-f(w)|}{d(v,w)} = |f(o)| + \textit{l}_f$$ Then $\textit{l}_f = \|Df\|_\infty = \text{sup}_{v \neq o} |f(v)-f(v^-)|$. This quantity is well-defined for the following types of infinite trees: infinite trees, as discussed in \cite{Tree}, those with a finite number of disjoint odd length cycles, those with a finite number of odd length cycles disjoint except for possibly pairwise sharing a single vertex. Then all the results from \cite{Tree} should follow with this amendment to the definition of the norm. 
+
+\indent Define $G$ to be an infinite tree with the addition of finite disjoint cycles. (Even cycles now allowed.) We first looked at the case when $G$ is one of the above types with the addition of one even cycle. Then we need to look at extending this to a finite set of disjoint cycles. We still define a vertex $o$ as the \lq\lq origin\rq\rq. 
+
+\indent We are now considering the case for which $G$ has a single even cycle. Let $b$ be the vertex in the even cycle with the minimum distance from $o$. Note that it is possible for $o=b$. Then number the rest of the vertices from $b$ as $\{a_1, a_2, ....a_k, c\}$. $c$ is the vertex opposite $b$, which is possible since the cycle is even. Alternate sides for $a_1$ and $a_2$, etc. Then define $T_1 = $ the \lq\lq tree\rq\rq  formed by removing edge $[b, a_1]$ and $T_2 =$ the "tree" formed by removing edge $[b,a_2]$. Then define $D_f = \text{sup}\{s_1, \dots s_k\}$ where $s_i = \text{sup}_{v \in T_i, v \neq o} |f(v) - f(v^-)|$. We use this definition to hopefully extend to finite cycles. 
+
+\indent We define $\| f\|_G = |f(o)| + \text{sup}_{v \neq w} \frac{|f(v)-f(w)|}{d(v,w)} = |f(o)| + l_f$.  First, we believe that $\|f\|_G$ is a norm:
+
+\indent \indent $\|f\|_G \ge 0$ for all $f$ clearly. $\|f\|_G=0$ if and only if $f(v) = f(w)$ for all $v\neq w$, or when $f$ is constant. Also $|f(o)|$ must be zero as well, meaning $f$ is the constant zero function.  $\|cf\|_G = |cf(o)| + \text{sup}_{v \neq w} \frac{|cf(v)-cf(w)|}{d(v,w)} = |c||f(o)| + |c|\text{sup}_{v\neq w} \frac{|f(v)-f(w)|}{d(v,w)} = |c|\|f\|_G$.  Lastly, $\|f+g\|_G=|(f+g)(o)|+\text{sup}_{v\neq w} \frac{|(f+g)(v) - (f+g)(w)|}{d(v,w)} \le |f(o)| + |g(o)| + l_f + l_g = \|f\|_G + \|g\|_G$, and this is a norm.
+
+\indent We want to show that $l_f = D_f$ so you can consider this as a sort of derivative and the norm would be $\|f\|_G=|f(o)|+D_f$. Now we would like to show that $l_f = D_f$ for the case of one even cycle. 
+
+
+
+%\include{chapterTwo}
 
 
 
 %% Note: appendix is now put before bibliography.
 %% include the following directives if there are any appendices
-\appendix
-\appendixeqnumbering
-\include{Appendix}
+%\appendix
+%\appendixeqnumbering
+%\include{Appendix}
 
 %%
 %%  bibliography
@@ -251,11 +331,29 @@
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEfull,bibfile}
 
-[1] F. Colonna and G.R. Easley, \textit{Multiplication operators on the Lipschitz Space of a Tree}, Int. Equ. Oper. Theory \textbf{68} (2010), 391-411.\\
+\pagebreak
 
-[2] R. Allen, F. Colonna, and G. Easley, \textit{Multiplication Operators not eh Weighted Lipschitz Space of a Tree}, J. Operator Theory \textbf{69} (2013), 101-123.\\
+\begin{thebibliography}{1000}
+\bibitem{Tree}F. Colonna and G.R. Easley, \textit{Multiplication operators on the Lipschitz Space of a Tree}, Int. Equ. Oper. Theory \textbf{68} (2010), 391-411.
 
-[3] R. Allen, F. Colonna, G. Easley, \textit{Multiplication Operators between Lipschitz-Type Spaces on a Tree}, Int J. of Mathematics and Mathematical Sciences \textbf{2011} (2011), 36 pp.\\
+\bibitem{Weighted}R. Allen, F. Colonna, and G. Easley, \textit{Multiplication Operators on the Weighted Lipschitz Space of a Tree}, J. Operator Theory \textbf{69} (2013), 101-123.
+
+\bibitem{Between}R. Allen, F. Colonna, G. Easley, \textit{Multiplication Operators between Lipschitz-Type Spaces on a Tree}, Int J. of Mathematics and Mathematical Sciences \textbf{2011} (2011), 36 pp.
+
+\bibitem{HomoGen}J.M. Cohen and F. Colonna, \textit{The Bloch Space of a Homogeneous Tree'}, Boletin de la Sociedad Matematica Mexicana \textbf{37} (1992), 63-82.
+
+\bibitem{Zyg1}F. Colonna and S. Li, \textit{Weighted composition operators from $H^\infty$ into the Zygmund spaces}, Complex Anal. Oper. Theory 7 \textbf{(2013)}, no. 5, 1402-1512. 
+
+\bibitem{Zyg2}H. Li and X. Fu, \textit{A new characterization of generalized weighted composition operators from the Bloch space into the Zygmund space}, J. Funct. Spaces Appl. \textbf{2013}, 6 pp.
+
+\bibitem{Zyg3}X. Fu and S. Li, \textit{Composition operators from Zygmund spaces into $Q_k$ spaces}, J. Inequal. Appl. \textbf{2013}:175, 9pp. 
+
+\bibitem{CC94}J.M. Cohen and F. Colonna, \textit{Embeddings of trees in the hyperbolic disk}, Complex Variables \textbf{94}, 1994, 311-335.
+
+\bibitem{ACE14}R.F. Allen, F. Colonna, and G.R. Easley, \textit{Composition operators on the Lipschitz space of a tree}, Mediterr. J. Math. 11 \textbf{(2014)}, no.1, 97-108.
+
+\bibitem{ACE12}R.F. Allen, F. Colonna, and G.R. Easley, \textit{Multiplication operators on the iterated logarithmic Lipschitz spaces of a tree}, Mediterr. J. Math. 9 \textbf{(2012)}, no.4, 575-600.
+\end{thebibliography}
 
 %%
 %% curriculum vitae
